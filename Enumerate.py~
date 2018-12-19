@@ -1,0 +1,3 @@
+words = ('cool', 'powerful', 'readable')
+for index, item in enumerate(words):
+	print index, item

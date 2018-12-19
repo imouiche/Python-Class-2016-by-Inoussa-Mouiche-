@@ -1,0 +1,10 @@
+"""class person"""
+
+class Person:
+	def __init__(self, Name, Surname):
+		self.name = Name
+		self.surname = Surname
+	def __str__(self):
+		return "%s %s" %(self.name, self.surname)
+	def Getsurname(self):
+		print self.surname

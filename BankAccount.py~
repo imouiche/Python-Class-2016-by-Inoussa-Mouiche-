@@ -1,0 +1,24 @@
+"""define a bank account class"""
+
+class BankAccount:
+	def __init__(self, Name, Type, Number, InitDeposit):
+		self.name = Name
+		self.type = Type
+		self.number = Number
+		self.balance = InitDeposit
+	def CashDeposit(self, amount):
+		self.balance += amount
+	def CashWidthdrawal(self, amount):
+		self.balance -= amount
+	def Balance(self):
+		print '%s %f'%(self.name, self.balance)
+	def __str__(self):
+		return "%s, %f" %(self.name, self.number)
+		
+if __name__ =='__main__':
+	account1 = BankAccount('Jule Penda', 'saving', '821', 25000)
+	account1.CashDeposit(35000)
+	account1.CashWidthdrawa(2000)
+	account1.Balance()
+
+

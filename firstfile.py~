@@ -1,0 +1,14 @@
+""" documentation"""
+#var('area width height)
+from math import sqrt
+
+#if '__main__' == '__name__':
+width = int(input("Enter the width: "))
+height = int(input("Enter the heigth: "))
+
+Area = width*height
+print ("The area is= ")
+print (Area)
+
+racine = sqrt(Area)
+print ("La racine est = ", racine)

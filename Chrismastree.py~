@@ -1,0 +1,59 @@
+""" Let us biult our Chrismas Tree """
+from __future__ import division
+from factorial import facto
+import sys
+import math as m
+
+def Tree(n):
+	record = sys.stdout
+	f = open('Tree.txt', 'w')
+	sys.stdout = f
+	for i in range(n):
+		print 25*' '," {} {}".format(' '*(n-(i+1)),'*'*(2*i+1))
+	print 25*' ', '*'.center(2*n+3)
+	print 25*' ', '*'.center(2*n+3)
+
+	sys.stdout = record
+	f.close()
+def primalityText(n):
+	if n==0 or n==1:
+		print "please enter an +ve enteger different from zero and 1"
+		n = input(":")
+		#continue
+	elif n==2:
+		print "{} is a prime number".format(n)
+	else:
+		i = 2
+		while i< n:
+			if n%i == 0:
+				print("{} is not a prime number".format(n))
+				break
+			#print("{} is not a prime number".format(n))
+			elif i+1 == n:
+				print("{} is a prime number".format(n))
+				break
+			else:
+				i += 1
+
+def f(x,k):
+	f = m.pow(x,k-1)*m.exp(-x)
+	return f
+def Simpsons(b,k):
+	n = 100*b
+	h = b/n
+	f0 = f(0,k)
+	fn = f(b,k)
+	feven = 0
+	fodd = 0
+	for i in xrange(1,n): 
+		x = i*h
+		if i%2 == 0:
+			feven = feven + 2*f(x, k)
+		else:
+			fodd = fodd +  4*f(x, k)
+	I = h/3*(f0 + feven + fodd + fn)
+	Error = facto(k)-I
+	print "Integral value is {} and the error is {}".format(I, Error)
+	
+	
+

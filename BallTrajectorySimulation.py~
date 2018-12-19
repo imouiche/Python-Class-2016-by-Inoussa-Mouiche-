@@ -1,0 +1,84 @@
+"""    Plot the trajectory of a ball  
+Usage: run BallTrajectorySimulation.py 0 300 45 
+"""
+
+
+from scitools.std import *
+import sys
+import time
+import os
+import glob
+
+def trajectoire( x, y0, v0, theta, g=9.81 ):                    # ball trajectory
+	y = x*tan(theta) - (g*x**2)/(2*v0**2*(cos(theta))**2) + y0
+	return y
+	
+def ball_position(t, y0, v0, theta, g=9.81):                          #return  ball position at time t
+	xt = v0*t*cos(theta)
+	yt = -0.5*g*t**2 + v0*t*sin(theta)
+	
+	return (xt, yt)
+	
+if __name__ =='__main__':
+	time0 = time.time()                                           #Timing the rogram execution
+	if len(sys.argv) < 4:
+		sys.exit("Program requires 3 arguments\n \
+		USAGE: run BallTrajectory.py InitialState Velocity angle\n  \
+		EXAMPLE: run BallTrajectory.py 0 20 45")
+	else:
+		y0 = float(sys.argv[1])                                #initial position (0, y0)
+		v0 = float(sys.argv[2])                                # initial velocity
+		theta = float(sys.argv[3])                             # angle
+		g = 9.81
+	
+		t_init = 0						# t0 = t_init
+		t_fin  = v0*sin(theta)/0.5/g				# makes all yt positive
+		N = 100                                                 #number of time points
+		delta_t = (t_fin - t_init)/N
+		#delta_t = 1
+		timePoints = arange(t_init, t_fin, delta_t)              # time point tk = t_int + k*delta_t  
+	 
+		os.mkdir('tmp/')
+		tmpDir = 'tmp/'
+	
+	#	xt, yt = ball_position(20, y0, v0, theta)
+	#	plot([xt], [yt], 'bo')
+	#	print xt, yt
+		f = open('points.txt','w')
+		counter = 0
+	
+		Xpositions = []
+		Ypositions = []
+	
+		# take the xt, yt boundaries for scalling the axis
+		for t in timePoints:
+			xt, yt = ball_position(t, y0, v0, theta)
+			Xpositions.append(xt)
+			Ypositions.append(yt)
+		Xmin = min(Xpositions)
+		Xmax = max(Xpositions)
+		Ymin = min(Ypositions)
+		Ymax = max(Ypositions)
+	
+		for i in range(len(Xpositions)):
+			plot([Xpositions[i]], [Ypositions[i]], 'bo', \
+			xlabel='x_t', ylabel='y_t', \
+		 	 axis=[Xmin-5, Xmax+50, Ymin-1, Ymax+50], \
+			savefig='%s/tmp%04d.png' %(tmpDir,counter))
+		
+			f.write('%s\t%s\n'%(str(xt), yt))
+			counter += 1
+		f.close()
+		#time.sleep(0.2) # can insert a pause to control movie speed
+		# Make movie file the simplest possible way:
+		movieFiles = tmpDir + "tmp*.png"
+		movie(movieFiles, output_file='ballmovie')
+		
+		#deleting the plot and the temporary directory
+		for filename in glob.glob(movieFiles):
+			os.remove(filename)
+
+		os.rmdir(tmpDir)
+	duration = time.time()-time0
+	print "The program took %0.5f minutes to run" %duration
+	

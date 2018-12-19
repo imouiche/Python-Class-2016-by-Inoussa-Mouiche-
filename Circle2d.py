@@ -1,0 +1,34 @@
+""" Plotting a 3D graph"""
+
+from mpl_toolkits.mplot3d import Axes3D
+from matplotlib import cm
+import matplotlib.pyplot as plt
+import numpy as np
+
+if __name__ =='__main__':
+	fig = plt.figure()
+
+	ax = fig.gca(projection='3d')  #create a 3D system of axis
+	x = np.arange(-5, 5, 0.1)     #generate the x-subdivisions
+	y = np.arange(-3, 3, 0.2)    #generate the y-subdivisions
+	#z = np.arange(-3, 3, 0.2)
+	X, Y = np.meshgrid(x, y)     #generate the (x,y) 2D-grid
+	#Z = X**2 + Y**2
+	#X, Y, Z = np.meshgrid(x, y,z)
+	#Z = np.sin(np.sqrt(X**2 + Y**2))
+	Z = np.cos(X**2+Y**2)/(1+X**2+Y**2)
+	#f = X**2 + z**2 - (y)**3*(1-y)**3
+	Z = X**2+Y**2
+
+	#surf = ax.plot_surface(X, Y, Z, rstride=1, cstride=1, cmap=cm.ocean,
+	#	   linewidth=0, antialiased=True)    #cmap=cm.coolwarm, cm.rainbow 
+	surf = ax.plot( Z)    #cmap=cm.coolwarm, cm.rainbow 
+
+
+	#fig.colorbar(surf, shrink=0.5, aspect=5)
+
+	#plt.savefig('threeDPlot.png')
+
+	plt.show()
+
+
